@@ -1,0 +1,22 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>大分県市町村協会</h1>
+    ...
+    <script>
+        fetch('./NO3-21_44_210101.geojson')
+        .then(response =>{
+            if (response.ok)throw new Error('MEtwork response was not ok');
+            return response.json();
+        })
+        .then(geojson => {
+            console.log('GeoJSONオブジェクト:',geojson);
+            console.log(feature.geometry);
+        })
+        .catch(error => {
+            console.error('取得エラー:', error);
+        });
+        </script>
+        </body>
+        </html>

@@ -142,16 +142,16 @@ var selectedCities = null;
       });
       console.log(cityOfficeLocations[0]);
 
-      cityOfficeLocations = cityOfficeLocations.filter((cityOffice) => {
+     /* cityOfficeLocations = cityOfficeLocations.filter((cityOffice) => {
         // return cityOffice[1] == "大分県"
         return cityOffice[0].startsWith("44") && cityOffice[0].length > 4;
-      });
+      });*/
       console.log(cityOfficeLocations);
-      /*
+      
       cityOfficeLocations.forEach((city)=>{
         if(city[0].length < 5)
           city[0] = "0" + city[0];
-      })*/
+      })
       selectedCities = cityOfficeLocations;
 
       return cityOfficeLocations;
@@ -214,7 +214,7 @@ cities = {"44000": "大分県",
 })();
 
 (async () => {
-/*
+
   const boundaries = await (await fetch("./data/N03-21_210101.json")).json()
   let prefectureNames = boundaries.features.map((feature) => feature.properties["N03_001"]);
   console.log("自治体の境界の数", prefectureNames.length)
@@ -233,18 +233,18 @@ cities = {"44000": "大分県",
     root.appendChild(option);
     return root;
   }, select);
-  /*
+  
   select.addEventListener("change", (evt) => {
     const value = evt.target.value;
-    alert(value);
-  })
-    /*
+    //alert(value);
+ // })
     // 1. 選択した都道府県に含まれる幾何データを取得
     const geometries = boundaries.features.filter((feature) => feature.properties["N03_001"] == value).map((feature)=>feature.geometry);
 
     // 幾何データをポリラインに変換
     // ポリゴンの場合は、ポリラインを1つしか持っていない
-    // マルチポリゴンの場合は、ポリラインを複数持っている
+    //
+  //マルチポリゴンの場合は、ポリラインを複数持っている
     const polylines= geometries.map((geometry=>{
       if(geometry.type == "Polygon"){
         return geometry.coordinates;
@@ -257,9 +257,11 @@ cities = {"44000": "大分県",
     svg.resize(points);
     // ポリラインを描画座標に変換した後、svgに描画
     const profile = svg.toCanvasCoordFromPolylines(polylines).map((polyline)=>svg.toPath(polyline)).join(" ");
+
     const pathNode = svg.root.querySelector("path");
     pathNode.setAttribute("d", profile);
- /*
+  })
+ 
     // 2. 選択した都道府県の自治体コードたちN03_007の配列を作る
     const features = boundaries.features.filter((feature)=>feature.properties["N03_001"] == value);
     // feature.properties["N03_007"]が自治体コード
@@ -275,7 +277,7 @@ cities = {"44000": "大分県",
     selectedCities = cities;
 
   // 配列からリストを生成 ... 1対1の時は ... ?
-  const list = cities.map((city) => {
+  const list2 = cities.map((city) => {
     let value = city[0];
     let name = city[1];
     const li = document.createElement("li");
@@ -291,7 +293,7 @@ cities = {"44000": "大分県",
   // 配列をある一つの要素にするには...? 集約機能だからreduce を使う
   const ul = document.createElement("ul");
   ul.classList.add("filter");
-  list.reduce((root, li) => {
+  list2.reduce((root, li) => {
     root.append(li);
     return root;
   }, ul);
@@ -304,5 +306,5 @@ cities = {"44000": "大分県",
     base.parentNode.appendChild(ul);
 
   });
-*/
+
 })();

@@ -260,7 +260,7 @@ cities = {"44000": "大分県",
 
     const pathNode = svg.root.querySelector("path");
     pathNode.setAttribute("d", profile);
-  })
+  
  
     // 2. 選択した都道府県の自治体コードたちN03_007の配列を作る
     const features = boundaries.features.filter((feature)=>feature.properties["N03_001"] == value);

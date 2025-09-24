@@ -15,7 +15,7 @@
       flex-direction: column;
     }
     main {
-      flex: 1;
+      height: 100dvh;
       width: 100%;
       display: flex; 
       flex-direction: row;
@@ -33,10 +33,16 @@
       background: #f5f5f5;
       padding: 1em;
     }
+    
+    .filter li:has(input[name="oita"]:not(:checked)){
+      display:none;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 </head>
 <body desplay:flex; flex-direction:column>
-    <header></header>
+  <script>eruda.init();</script>
+  <header></header>
     <main flex:1;>
       <nav>
         <h2>目次</h2>
@@ -49,50 +55,70 @@
         <p>ここにコンテンツが入ります</p>  
        <!DOCTYPE html>
     <!-- polyline例 -->
+     <!--
     <svg width="200" height="200" style="border:1px solid #ccc;">
       <polyline points="10,10 60,80 120,20 180,90" fill="none" stroke="blue" stroke-width="2" />
-    </svg>
+    </svg> -->
 
     <!-- path例 -->
-    <svg width="200" height="200" style="border:1px solid #ccc;">
+<!--    <svg width="200" height="200" style="border:1px solid #ccc;">
       <path d="M10 10 L60 80 L120 20 L180 90" fill="none" stroke="red" stroke-width="2" />
-    </svg> 
+    </svg> --> 
  <!-- 追加 -->
     <svg id="profile" width="200" height="200" style="border:1px solid #ccc;">
+      <circle cx="100" cy="100" r="30" fill="#ffcc00" stroke="green" stroke-width="2" />
       <path id="output" fill="none" stroke="black" stroke-width="2" />
     </svg>
     
       </article>
       
-      <aside>
-        <h2>サイドメニュー</h2>
-      </aside>
-
-      <h1>大分県市町村境界</h1>
-      <pre id="json"></pre>
-    </main>
+       <aside>
+        <form name="$cities">
+        
+        <h2>操作メニュー</h2>
+        <!-- <button type="button">次</button> -->
+        <button type="button" onclick="controller.nextLocation(event)">次</button><br> 
+        <label><input type="checkbox" name="toggleList" onclick="toggle(event)">自治体一覧表示/非表示</label> 
+        
+        <h2>都道府県</h2>
+        h2>
+        
+        <h2>自治体</h2>
+        
+        <ul class="filter">
+  
+          <li><input type="radio" name="oita" value="44000" onchange="pickCity(event)">大分県</li> 
+          <li><label><input type="radio" name="oita" value="44000" onchange="pickCity(event)">大分県</label></li>
+          <li><label><input type="radio" name="oita" value="44201" onchange="pickCity(event)">大分市</label></li>
+          <li><label><input type="radio" name="oita" value="44202" onchange="pickCity(event)">別府市</label></li>
+          <li><label><input type="radio" name="oita" value="44203" onchange="pickCity(event)">中津市</label></li>
+          <li><label><input type="radio" name="oita" value="44204" onchange="pickCity(event)">日田市</label></li>
+          <li><label><input type="radio" name="oita" value="44205" onchange="pickCity(event)">佐伯市</label></li>
+          <li><label><input type="radio" name="oita" value="44206" onchange="pickCity(event)">臼杵市</label></li>
+          <li><label><input type="radio" name="oita" value="44207" onchange="pickCity(event)">津久見市</label></li>
+          <li><label><input type="radio" name="oita" value="44208" onchange="pickCity(event)">竹田市</label></li>
+          <li><label><input type="radio" name="oita" value="44209" onchange="pickCity(event)">豊後高田市</label></li>
+          <li><label><input type="radio" name="oita" value="44210" onchange="pickCity(event)">杵築市</label></li>
+          <li><label><input type="radio" name="oita" value="44211" onchange="pickCity(event)">宇佐市</label></li>
+          <li><label><input type="radio" name="oita" value="44212" onchange="pickCity(event)">豊後大野市</label></li>
+          <li><label><input type="radio" name="oita" value="44213" onchange="pickCity(event)">由布市</label></li>
+          <li><label><input type="radio" name="oita" value="44214" onchange="pickCity(event)">国東市</label></li>
+          <li><label><input type="radio" name="oita" value="44322" onchange="pickCity(event)">姫島村</label></li>
+          <li><label><input type="radio" name="oita" value="44341" onchange="pickCity(event)">日出町</label></li>
+          <li><label><input type="radio" name="oita" value="44461" onchange="pickCity(event)">九重町</label></li>
+          <li><label><input type="radio" name="oita" value="44462" onchange="pickCity(event)">玖珠町</label></li>
+        </ul> 
+        </form>
+        </aside>
+       
+        <aside>
+          <h2>サイドメニュー</h2>
+          <h3>大分県市町村境界</h3>
+          <pre id="json"></pre>
+        </aside>
+      </main>
+      <footer>フッター（常に下に表示）</footer>
     <script src="index.js"></script>
   </body>
 </html>
-    <!-- path例<script>
-fetch('./N0 throw new Error('Network response was not ok');
-    return response.json();
-  })
-  .then(geojson => {
-    const feature = geojson.features[0];
-    console.log(feature)
-        <!DOCTYPE html>
-<html>
-  <body>
-// ここで処理を書く
-    document.getElementById("json").textContent = JSON.stringify(feature.geometry, null, 2);
-  })
-  .catch(error => {
-   <script>
-
- console.error('取得エラー:', error);
-  });
-    </main>
-    <footer>フッター（常に下に表示）</footer>
-</body>
-</html> -->
+  

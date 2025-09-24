@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM練習</title>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+</head>
+<body>
+　<script>eruda.init();</script>
+  <h1 id="title">こんにちは</h1>
+  <button id="change">文字を変える</button>
+  <script>
+  // 1. 要素を探す
+  console.log(document.getElementById('title'));
+  console.log(document.querySelector('h1#title'));
+  
+  // 2. 参照する
+  console.log(document.body.childNodes[1]);
+  console.log(document.body.children[1]);
+  console.log(document.getElementById('title').parentNode);
+  console.log(document.getElementById('title').nextSibling);
+  console.log(document.getElementById('title').nextElementSibling);
+  
+  // 3. 中身を変える・見た目を変える
+  let title = document.getElementById('title');
+  title.textContent = "変更済"
+  title.setAttribute("style", "color: red");
+  
+  // 4. 要素を作る
+  // 5. 親に追加
+  const pNode = document.createElement("p");
+  pNode.appendChild(document.createTextNode("こんにちは"));
+  document.body.appendChild(pNode);
+
+  // 5. 親から削除
+  // 6. イベントを設定
+  const button = document.getElementById("change");
+  button.addEventListener("click", ()=>{
+    document.body.removeChild(pNode);
+  });
+
+  // 7. まとめて設定
+  title.addEventListener("click", ()=>{
+    pNode.innerHTML = "<h2>まとめて設定</h2>";
+    document.body.appendChild(pNode);
+  });
+  
+  // 中身を変える・見た目を変える
+  title = document.getElementById('title');
+  title.textContent = "変更済"
+  title.setAttribute("style", "color: red");
+  </script>
+</body>
+</html>

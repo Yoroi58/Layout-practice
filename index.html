@@ -42,7 +42,12 @@
 </head>
 <body desplay:flex; flex-direction:column>
   <script>eruda.init();</script>
-  <header></header>
+  <header>
+    <p>ヘッダです</p>
+    <ul>
+      <li><button onclick="window.open('grid.html','_blank')"メイン画面へ<button></button></li>
+    </ul>
+  </header>
     <main flex:1;>
       <nav>
         <h2>目次</h2>
@@ -76,8 +81,8 @@
         <form name="$cities">
         
         <h2>操作メニュー</h2>
-        <!-- <button type="button">次</button> -->
-        <button type="button" onclick="controller.nextLocation(event)">次</button><br> 
+         <button type="button">次</button> 
+         <button type="button" onclick="controller.nextLocation(event)">次</button><br> 
         <label><input type="checkbox" name="toggleList" onclick="toggle(event)">自治体一覧表示/非表示</label> 
         
         <h2>都道府県</h2>

@@ -1,134 +1,207 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>My First Layout</title>
-  <style>
-    html {
-      margin: 0;
-      height: 100%;
-    }
-    body {
-      height: 100dvh;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    main {
-      height: 100dvh;
-      width: 100%;
-      display: flex; 
-      flex-direction: row;
-      overflow-y: hidden;
-    }
-    nav {
-      background: #c3c300;
-    } 
-    article {
-      background: #fff;
-      padding: 1em;
-    }
-    aside {
-      width: 200px;
-      background: #f5f5f5;
-      padding: 1em;
-    }
-    
-    .filter li:has(input[name="oita"]:not(:checked)){
-      display:none;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-</head>
-<body desplay:flex; flex-direction:column>
-  <script>eruda.init();</script>
-  <header>
-    <p>ヘッダです</p>
-    <ul>
-      <li><button onclick="window.open('grid.html','_blank')"メイン画面へ<button></button></li>
-    </ul>
-  </header>
-    <main flex:1;>
-      <nav>
-        <h2>目次</h2>
-        <ul>
-          <li>コンテンツ1</li>
-          <li>コンテンツ2</li>
-        </ul>
-      </nav>
-      <article style="flex:1">
-        <p>ここにコンテンツが入ります</p>  
-       <!DOCTYPE html>
-    <!-- polyline例 -->
-     <!--
-    <svg width="200" height="200" style="border:1px solid #ccc;">
-      <polyline points="10,10 60,80 120,20 180,90" fill="none" stroke="blue" stroke-width="2" />
-    </svg> -->
+<html lang="ja">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>grid layout</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/grid.css" />
+<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script> 
+    <style>
+      body {
+        color: #C3CCBC;
+        background-color: #486A83;
+      }
+      article {
+        background-color: #D3CCBC;
+        border: 4px solid #BFA179;
+      }
 
-    <!-- path例 -->
-<!--    <svg width="200" height="200" style="border:1px solid #ccc;">
-      <path d="M10 10 L60 80 L120 20 L180 90" fill="none" stroke="red" stroke-width="2" />
-    </svg> --> 
- <!-- 追加 -->
-    <svg id="profile" width="200" height="200" style="border:1px solid #ccc;">
-      <circle cx="100" cy="100" r="30" fill="#ffcc00" stroke="green" stroke-width="2" />
-      <path id="output" fill="none" stroke="black" stroke-width="2" />
-    </svg>
-    
-      </article>
+      aside h2 {
+        padding: 0.4em 0.8em;
+        color: black;
+        background-color: #D3CCBC;
+        z-index: 0;
+        clip-path: polygon(4% 50%, 4% 12%, 88% 12%, 80% 50%, 88% 88%, 4% 88%); 
+        /* clip-path: polygon(6% 50%, 12% 12%, 88% 12%, 94% 50%, 88% 88%, 12% 88%);*/
+      }
+
+      .card-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        padding: 1em;
+        margin: 1em auto;
+        background-color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-size: 1rem;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+        transition: transform 0.1s, box-shadow 0.1s;
+      }
+
+      .card-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .card-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .button-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2列 */
+        gap: 10px; /* ボタン間の余白 */
+        margin-top: 10px;
+      }
+
+      [role="tree"] {
+        padding: 0;
+      }
+
+      [role="treeitem"] {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      [role="treeitem"] summary > button {
+        display: none;
+        gap: 4px;
+      }
+      [role="treeitem"] summary:hover > button {
+        display: inline-block;
+      }
       
-       <aside>
-        <form name="$cities">
-        
-        <h2>操作メニュー</h2>
-         <button type="button">次</button> 
-         <button type="button" onclick="controller.nextLocation(event)">次</button><br> 
-        <label><input type="checkbox" name="toggleList" onclick="toggle(event)">自治体一覧表示/非表示</label> 
-        
-        <h2>都道府県</h2>
-         <select name="prefecture">  
-        　<option value="">都道府県を選択してください</option>
-          <option value="44">大分県</option>
-          <option value="45">宮崎県</option>
-          <option value="46">鹿児島県</option>
-          <option value="47">沖縄県</option>
-        </select>
-        <h2>自治体</h2>
-        
-        <ul class="filter">
-  
-          <li><input type="radio" name="oita" value="44000" onchange="pickCity(event)">大分県</li> 
-          <li><label><input type="radio" name="oita" value="44000" onchange="pickCity(event)">大分県</label></li>
-          <li><label><input type="radio" name="oita" value="44201" onchange="pickCity(event)">大分市</label></li>
-          <li><label><input type="radio" name="oita" value="44202" onchange="pickCity(event)">別府市</label></li>
-          <li><label><input type="radio" name="oita" value="44203" onchange="pickCity(event)">中津市</label></li>
-          <li><label><input type="radio" name="oita" value="44204" onchange="pickCity(event)">日田市</label></li>
-          <li><label><input type="radio" name="oita" value="44205" onchange="pickCity(event)">佐伯市</label></li>
-          <li><label><input type="radio" name="oita" value="44206" onchange="pickCity(event)">臼杵市</label></li>
-          <li><label><input type="radio" name="oita" value="44207" onchange="pickCity(event)">津久見市</label></li>
-          <li><label><input type="radio" name="oita" value="44208" onchange="pickCity(event)">竹田市</label></li>
-          <li><label><input type="radio" name="oita" value="44209" onchange="pickCity(event)">豊後高田市</label></li>
-          <li><label><input type="radio" name="oita" value="44210" onchange="pickCity(event)">杵築市</label></li>
-          <li><label><input type="radio" name="oita" value="44211" onchange="pickCity(event)">宇佐市</label></li>
-          <li><label><input type="radio" name="oita" value="44212" onchange="pickCity(event)">豊後大野市</label></li>
-          <li><label><input type="radio" name="oita" value="44213" onchange="pickCity(event)">由布市</label></li>
-          <li><label><input type="radio" name="oita" value="44214" onchange="pickCity(event)">国東市</label></li>
-          <li><label><input type="radio" name="oita" value="44322" onchange="pickCity(event)">姫島村</label></li>
-          <li><label><input type="radio" name="oita" value="44341" onchange="pickCity(event)">日出町</label></li>
-          <li><label><input type="radio" name="oita" value="44461" onchange="pickCity(event)">九重町</label></li>
-          <li><label><input type="radio" name="oita" value="44462" onchange="pickCity(event)">玖珠町</label></li>
-        </ul> 
-        </form>
-        </aside>
-       
+      /*
+      .editable-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .editable-label .edit {
+        opacity: 0;
+        width: 0;
+        padding: 0;
+        border: none;
+        font: inherit;
+        transition: all 0.2s ease;
+      }
+
+      .editable-label:focus-within .label-text {
+        display: none;
+      }
+
+      .editable-label:focus-within .edit {
+        width: auto;
+        opacity: 1;
+      } */
+    </style>
+  </head>
+  <body>
+    <header style="background-color: #486A83">
+        <p>ドキュメントヘッダ</p>
+    </header>
+    <main class="grid-layout">
+        <nav class="outline-nav">
+          <p>アウトラインメニュー</p>
+          <button onclick="document.getElementById('qtemplate').show()">ダイアログを開く</button>
+          <button onclick="document.getElementById('problemDialog').show()">問題ダイアログを開く</button><br>
+          <button type="button" data-action="load">読込</button>
+          <button type="button" data-action="save">保存</button> 
+          <ul role="tree">
+           <li role="treeitem" aria-expanded="true">
+              <details open>
+                <summary>
+                  <label class="editable-label">
+                    <span class="label-text">問題リスト</span>
+                    <!-- <input class="edit" type="text" value="問題リスト" name="problems[]" 
+                      onblur="this.previousElementSibling.textContent = this.value;"
+                      onkeydown="if(event.key === 'Enter') this.blur();"> -->
+                  </label>       
+                  <button type="button" data-action="add">新規</button>
+                </summary>
+                <ul>
+                  <li>問題1</li>
+                  <li>問題2</li>
+                  <li>問題3</li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+       </nav>
+        <article style="position: relative;">
+            コンテンツ領域
+            <dialog id="qtemplate" style="background-color: transparent;">
+              <p>問題ダイアログです</p>
+              <!-- path例 追加 -->
+
+              <div class="button-grid">
+                <button>クリック</button>
+                <button onclick="qtemplate.close();">閉じる</button>
+                <button onclick="qtemplate.close(); success.showModal()">正解</button>
+                <button onclick="qtemplate.close(); error.showModal()">不正解</button>
+              </div>
+            </dialog>        
+
+            <dialog id="problemDialog" style="background-color: transparent;" onclose="controller.answerProblem(event)">
+              <form name="problem" method="dialog">
+                <input type="hidden" name="order">
+                <h2><input type="text" value="問題" name="question" disabled></h2>
+            <!-- path例 追加 -->
+                <svg id="profile" width="400" height="400" style="border:2px solid black;">
+                  <circle cx="100" cy="100" r="10" fill="green" stroke-width="3"/>
+                  <path id="output" fill="none" stroke="black" stroke-width="2" />
+                </svg>
+
+                <div class="button-grid">
+                  <button class="card-button" type="submit" value="0"><input type="text" value="回答1" name="answer1" disabled><input type="radio" name="correctAnswer" value="0" checked></button>
+                  <button class="card-button" type="submit" value="1"><input type="text" value="回答2" name="answer2" disabled><input type="radio" name="correctAnswer" value="1" ></button>
+                  <button class="card-button" type="submit" value="2"><input type="text" value="回答3" name="answer3" disabled><input type="radio" name="correctAnswer" value="2" ></button>
+                  <button class="card-button" type="submit" value="3"><input type="text" value="回答4" name="answer4" disabled><input type="radio" name="correctAnswer" value="3" ></button>
+                </div>
+                <button id="addButton"type="submit" value="4">追加</button>
+              </form>
+            </dialog>   
+            <dialog id="success" style="background-color: transparent;" 
+              onclick="success.open && success.close()">
+              <p>正解！</p>
+            </dialog>
+            <dialog id="error" style="background-color: transparent;"
+              onclick="error.open && error.close()">
+              <p>不正解！</p>
+            </dialog>
+        </article>
         <aside>
-          <h2>サイドメニュー</h2>
-          <h3>大分県市町村境界</h3>
-          <pre id="json"></pre>
+            <form name="$cities">
+        
+                <h2>操作メニュー</h2>
+                <button type="button" onclick="controller.nextLocation(event)">次</button><br> 
+                <label><input type="checkbox" name="toggleList" onclick="controller.toggle(event)">自治体一覧表示/非表示</label> 
+                
+                <h2>都道府県</h2>
+                <select name="prefecture">
+                  <option value="">都道府県を選択してください</option>
+                  <option value="44">大分県</option>
+                  <option value="45">宮崎県</option>
+                  <option value="46">鹿児島県</option>
+                  <option value="47">沖縄県</option>
+                </select>
+        
+                <h2>自治体</h2>
+            </form>
         </aside>
-      </main>
-      <footer>フッター（常に下に表示）</footer>
+    </main>
+    <footer>
+        <p>ドキュメントフッタ</p>    
+    </footer>
     <script src="index.js"></script>
   </body>
 </html>
-  

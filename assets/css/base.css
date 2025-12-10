@@ -1,0 +1,27 @@
+html {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex-shrink: 0; /* headerの高さを固定 */
+}
+
+footer {
+    flex-shrink: 0; /* footerの高さを固定 */
+    margin-top: auto; /* footerを下部に固定 */
+}
+
+main {
+    flex: 1; /* mainが残りの空間を占有 */
+    overflow: hidden;
+}

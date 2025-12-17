@@ -271,7 +271,7 @@ document.addEventListener('click', (e) => {
       const orderValue = params[action].order;
       document.forms.problem.order.value = orderValue;
       
-      const problem = problem[orderValue];
+      const problem = problems[orderValue];
       document.forms.problem.question.value = problem?.question ?? "問題";
       document.forms.problem.answer1.value = problem?.answers[0] ?? "回答1";
       document.forms.problem.answer2.value = problem?.answers[1] ?? "回答2";
@@ -295,6 +295,14 @@ document.addEventListener('click', (e) => {
       document.getElementById('problemDialog').showModal();
       break;
     } 
+        case "delete": {
+      if(window.confirm("削除しますか？")) {
+        const order = btn.dataset.order;
+        problems.splice(order, 1);
+        updateProblemList(problems);
+      }
+      break;
+    }
     case 'save': {
       try {
         const json = JSON.stringify(problems, null, 2);
@@ -322,7 +330,7 @@ document.addEventListener('click', (e) => {
         reader.onload = (e) => {
           try {
             problems = JSON.parse(e.target.result);
-            updateProblemList();
+            updateProblemList(problems);
             alert(`${problems.length}件の問題を読み込みました`);
           } catch (err) {
             alert('ファイルの読み込みに失敗しました: ' + err.message);
@@ -337,17 +345,99 @@ document.addEventListener('click', (e) => {
 }); 
 
 // UI更新関数（既存コードから抽出）
-function updateProblemList() {
+function updateProblemList(problems) {
   const ul = document.querySelector('[role="treeitem"]')?.querySelector('ul');
   if (!ul) return;
+  /*
   ul.innerHTML = "";
   problems.forEach((problem, index) => {
     const li = document.createElement("li");
     li.innerHTML = `<button type="button" data-action="view" data-order="${index}">${problem.question}</button>
-     <button type="button" data-action="update" data-order="${index}">変更</button>`;
-    ul.appendChild(li);
+  　<button type="button" data-action="update" data-order="${index}">変更</button>
+    <button type="button" data-action="delete" data-order="${index}">削除</button> 
+    <span class="drag-handle">☰</span>
+    `;
+  ul.appendChild(li);
   });
-  } 
+  */
+
+  const range = document.createRange();
+    range.selectNodeContents(ul);
+    const rootFragment = range.createContextualFragment(
+      problems.reduce((fragments, problem, index)=>{
+      fragments += `<li draggable="true" data-index="${index}" class="draggable-item" style="white-space: nowrap;">
+        <button type="button" data-action="view" data-order="${index}">${problem.question}</button>
+        <button type="button" data-action="update" data-order="${index}">変更</button>
+        <button type="button" data-action="delete" data-order="${index}">削除</button>
+        <span class="drag-handle">☰</span>
+        </li>`;
+      return fragments;
+    },""));
+    ul.replaceChildren(rootFragment);
+     // ドラッグアンドドロップ機能の設定 , これ以降全て
+  let draggedElement = null; 
+  let draggedIndex = null;
+
+  // ドラッグ開始
+  ul.addEventListener('dragstart', (e) => {
+    if (e.target.closest('li[draggable="true"]')) {
+      draggedElement = e.target.closest('li[draggable="true"]');
+      draggedIndex = parseInt(draggedElement.getAttribute('data-index'));
+      draggedElement.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', draggedElement.innerHTML);
+    }
+  });
+
+  // ドラッグ中
+  ul.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    
+    const targetLi = e.target.closest('li[draggable="true"]');
+    if (targetLi && targetLi !== draggedElement) {
+      const targetIndex = parseInt(targetLi.getAttribute('data-index'));
+      const rect = targetLi.getBoundingClientRect();
+      const midpoint = rect.top + rect.height / 2;
+      
+      if (e.clientY < midpoint) {
+        ul.insertBefore(draggedElement, targetLi);
+      } else {
+        ul.insertBefore(draggedElement, targetLi.nextSibling);
+      }
+    }
+  });
+
+  // ドロップ
+  ul.addEventListener('drop', (e) => {
+    e.preventDefault();
+    
+    if (draggedElement) {
+      const targetLi = e.target.closest('li[draggable="true"]');
+      if (targetLi && targetLi !== draggedElement) {
+        const targetIndex = parseInt(targetLi.getAttribute('data-index'));
+        
+        // problems配列の順序を更新
+        const item = problems.splice(draggedIndex, 1)[0];
+        problems.splice(targetIndex, 0, item);
+        
+        // UIを再描画
+        updateProblemList(problems);
+      }
+    }
+  });
+
+  // ドラッグ終了
+  ul.addEventListener('dragend', (e) => {
+    if (draggedElement) {
+      draggedElement.classList.remove('dragging');
+      draggedElement = null;
+      draggedIndex = null;
+    }
+  });
+
+}
+  
 
 // グローバルデータマネージャー
 const repository = new Repository();
@@ -477,9 +567,9 @@ const repository = new Repository();
       toggleNode.classList.toggle("filter", !checked);
     },
     answerProblem: (evt) =>{
-      const answer = evt.target.returnValue -0 ;
-      const order = document.forms.problem.order.value -0;
-      if(answer == 4){
+       if(evt.target.returnValue == "cancel") return; //ここ
+
+      if(evt.target.returnValue == "edit"){ // ここ
         const order = document.forms.problem.order.value -0;
         const question = document.forms.problem.question.value;
         const answer1 = document.forms.problem.answer1.value;
@@ -493,22 +583,18 @@ const repository = new Repository();
           correctAnswer : correctAnswer -0,
         };
         updateProblemList(problems);
-        /*
-        document.forms.problem.order.value = null; 
-        const ul = document.querySelector('[role="treeitem"]').querySelector('ul');
-        ul.innerHTML = "";
-        problems.forEach((problem, index) => {
-          const li = document.createElement("li");
-          li.innerHTML = `<li><button type="button" data-action="view" data-order="${index}">${problem.question}</button></li>`;
-          ul.appendChild(li);
-        });*/
-      }else if(answer == problems[order].correctAnswer) {
-        success.showModal();
-      } else {
-        error.showModal();
+
+        }else { // ここ
+        const answer = evt.target.returnValue -0;
+        const order = document.forms.problem.order.value -0;
+        if(answer == problems[order].correctAnswer) {
+          success.showModal();
+        } else {
+          error.showModal();
+        }
       }
-    }
-  };
+    },
+  }
 
   /* 
 // 大分県の18自治体データ

@@ -311,7 +311,7 @@ document.addEventListener('click', (e) => {
       
       const problem = problems[orderValue];
       document.forms.problem.question.value = problem?.question ?? "問題";
-      document.forms.problem.problemMap.value = problems[0].problemMap; 
+      document.forms.problem.problemMap.value = problem?.problemMap; 
       document.forms.problem.answer1.value = problem?.answers[0] ?? "回答1";
       document.forms.problem.answer2.value = problem?.answers[1] ?? "回答2";
       document.forms.problem.answer3.value = problem?.answers[2] ?? "回答3";
@@ -503,6 +503,30 @@ const repository = new Repository();
   selectedCities = cityOfficeLocations;
 
   controller = {
+    updateProblemMap: (cityName) =>{
+      if(!cityName) return;    
+        
+        const features = boundaries.features
+          .filter((feature) => feature.properties["N03_001"] == cityName)
+        
+        const polylines = features.map((feature) => {
+          if (feature.geometry.type == "Polygon") {
+            return [feature.geometry.coordinates];
+          } else if (feature.geometry.type == "MultiPolygon") {
+            return feature.geometry.coordinates;
+          }
+        }).flat(2); // 最後にポリライン集合として平坦化する
+    
+        const points = polylines.flat(1); // 一旦、ポリライン集合を点集合に変換し、描画サイズを調整
+        svg.resize(points);
+        const profile = svg.toCanvasCoordFromPolylines(polylines)
+          .map((polyline) => svg.toPath(polyline))
+          .join(" ");
+        const pathNode = svg.root.querySelector("path");
+        pathNode.setAttribute("d", profile);
+    
+        return features;
+    },
     nextLocation: (evt) => {
       evt.preventDefault();
       const i = Math.floor(Math.random() * cityOfficeLocations.length);

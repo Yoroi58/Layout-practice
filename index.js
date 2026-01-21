@@ -311,7 +311,7 @@ document.addEventListener('click', (e) => {
       
       const problem = problems[orderValue];
       document.forms.problem.question.value = problem?.question ?? "問題";
-      document.forms.problem.problemMap.value = problem?.problemMap; 
+      document.forms.problem.problemMap.value = problem?.problemMap ?? "大分県"; 
       document.forms.problem.answer1.value = problem?.answers[0] ?? "回答1";
       document.forms.problem.answer2.value = problem?.answers[1] ?? "回答2";
       document.forms.problem.answer3.value = problem?.answers[2] ?? "回答3";

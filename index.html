@@ -158,7 +158,9 @@
                 <button onclick="qtemplate.close(); success.showModal()">正解</button>
                 <button onclick="qtemplate.close(); error.showModal()">不正解</button>
               </div>
-            </dialog>    
+            </dialog>  
+                        <dialog id="problemDialog" style="background-color: transparent;" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onclose="controller.answerProblem(event)">  
+              <form name="problem" method="dialo  
                           <form name="problem" method="dialog">
                 <header style="display: flex; justify-content: space-between; align-items: center;">
                   <input type="hidden" name="order">

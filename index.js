@@ -327,9 +327,9 @@ document.addEventListener('click', (e) => {
       const viewStyle = params[action].answerButtonView;
       addButton.setAttribute("style", `display: ${viewStyle};`);
       addButton.innerHTML = params[action].addButtonText ?? "追加";
-     // document.querySelectorAll('[name="correctAnswer"]').forEach(btn => 
-      //  btn.setAttribute("style", `display: ${viewStyle};`)
-      //);
+     document.querySelectorAll('[name="correctAnswer"]').forEach(btn => 
+       btn.setAttribute("style", `display: ${viewStyle};`)
+      );
       document.forms.$cities.prefecture.value = problem?.problemMap?? "" //
       controller.updateProblemMap(problem?.problemMap);
 
@@ -623,6 +623,11 @@ const repository = new Repository();
       const key = document.forms.$cities.oita.value;
       const i = cityOfficeLocations.findIndex((city) => city[0] == key);
       if (i > -1) {
+        if(document.forms.problem.cities.value == "problemMap"){ //(1)
+        }else{ //(2)
+          const text = document.querySelector('input[name="cities"]:checked ~ button input[type="text"]:first-child'); //(3)
+          text.value = cityOfficeLocations[i][1]; //(4)
+        } //(5)
         controller.updateLocation(i);
       }
     },
@@ -745,7 +750,14 @@ cities = {"44000": "大分県",
     // alert(value);
     // 1. 選択した都道府県に含まれる幾何データを取得
     document.forms.problem.problemMap.value = value;
-   
+    if(document.forms.problem.cities.value == "problemMap"){
+      document.forms.problem.problemMap.value = value;
+      controller.updateProblemMap(value);
+    }else{
+      const text = document.querySelector('input[name="cities"]:checked ~ button input[type="text"]:first-child');
+      text.value = value;
+    }
+
    /* const geometries = boundaries.features
       .filter((feature) => feature.properties["N03_001"] == value)
       .map((feature) => feature.geometry);

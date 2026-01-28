@@ -515,7 +515,20 @@ const repository = new Repository();
   selectedCities = cityOfficeLocations;
 
   controller = {
-            updateProblemMap: (cityName) =>{
+    changeLocalarea: (evt) =>{
+      const areaName = document.forms.$cities.area.value;
+      const areaPrefectures = areaList[areaName].group_by((areaName)=>areaName);
+      const prefectures = document.forms.$cities.querySelectorAll('[name="prefecture"] option');
+      prefectures.forEach((pref)=>{
+        const displayStyle = areaPrefectures[pref.textContent] ? "inline": "none"
+        pref.setAttribute("style", `display: ${displayStyle}`)
+      })
+      document.forms.$cities.prefecture.value = "";
+      
+      document.forms.problem.problemMap.value = areaName;
+      const feaures = controller.updateProblemMap(areaName);
+    },
+    updateProblemMap: (cityName) =>{
       if(!cityName) return;    
         const prefectureNames = areaList[cityName]; //
         const areaPrefectures = prefectureNames?.group_by((prefName)=>prefName); //

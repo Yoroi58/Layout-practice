@@ -509,7 +509,7 @@ const repository = new Repository();
     "中国地域": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"],
     "四国地域": ["徳島県", "香川県", "愛媛県", "高知県"],
     "九州地域": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県"],
-    "沖縄地域": ["沖縄"]
+    "沖縄地域": ["沖縄県"]
   }
   //repository.getCityOfficeLocations();
   selectedCities = cityOfficeLocations;

@@ -159,9 +159,8 @@
                 <button onclick="qtemplate.close(); error.showModal()">不正解</button>
               </div>
             </dialog>  
-                        <dialog id="problemDialog" style="background-color: transparent;" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onclose="controller.answerProblem(event)">  
-              <form name="problem" method="dialo  
-                          <form name="problem" method="dialog">
+                <dialog id="problemDialog" style="background-color: transparent;" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onclose="controller.answerProblem(event)">  
+                <form name="problem" method="dialog">
                 <header style="display: flex; justify-content: space-between; align-items: center;">
                   <input type="hidden" name="order">
                   <input type="hidden" name="problemMap">
@@ -228,6 +227,20 @@
                   <option value="45">宮崎県</option>
                   <option value="46">鹿児島県</option>
                   <option value="47">沖縄県</option>
+                </select>
+                                <h2>地域区分</h2>
+                <select name="area" onchange="controller.changeLocalarea(event)">
+                  <option value="">地域を選択してください</option>
+                  <option>北海道地域</option>
+                  <option>東北地域</option>
+                  <option>関東地域</option>
+                  <option>北陸地域</option>
+                  <option>中部地域</option>
+                  <option>近畿地域</option>
+                  <option>中国地域</option>
+                  <option>四国地域</option>
+                  <option>九州地域</option>
+                  <option>沖縄地域</option>
                 </select>
         
                 <h2>自治体</h2>

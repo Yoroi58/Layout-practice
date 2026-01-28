@@ -103,6 +103,14 @@
         width: auto;
         opacity: 1;
       } */
+
+            .card-button:active,
+      input[type="radio"]:checked ~ .card-button / ここを追加
+      {
+        transform: translateY(2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border: 2px solid;
+      }
     </style>
   </head>
   <body>
@@ -150,10 +158,8 @@
                 <button onclick="qtemplate.close(); success.showModal()">正解</button>
                 <button onclick="qtemplate.close(); error.showModal()">不正解</button>
               </div>
-            </dialog>        
-
-            <dialog id="problemDialog" style="background-color: transparent;" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onkeydown="if(event.key === 'Escape') this.close();" onclose="controller.answerProblem(event)">
-              <form name="problem" method="dialog">
+            </dialog>    
+                          <form name="problem" method="dialog">
                 <header style="display: flex; justify-content: space-between; align-items: center;">
                   <input type="hidden" name="order">
                   <input type="hidden" name="problemMap">
@@ -162,20 +168,40 @@
                   </h2>
                   <button type="submit" value="cancel">取消</button>
                 </header>
-                <!-- path例 追加 -->
-                <svg id="profile" width="250" height="250" style="border:2px solid black;">
-                  <circle cx="100" cy="100" r="10" fill="green" stroke-width="3"/>
-                  <path id="output" fill="none" stroke="black" stroke-width="2" />
-                </svg>
-
-                <div class="button-grid">
+            <!-- path例 追加 -->
+                <label> <!-- このlabelタグを追加(1) -->
+                  <input type="radio" name="cities" value="problemMap" checked>
+                  <!-- このinputタグを追加(2) -->
+                  <svg id="profile" width="400" height="400" style="border:2px solid black; display: block; margin: 0 auto;">
+                    <circle cx="100" cy="100" r="10" fill="green" stroke-width="3"/>
+                    <path id="output" fill="none" stroke="black" stroke-width="2" />
+                  </svg>                
+                </label>              
+                
+                <!-- ここは消します
+                <footer class="button-grid">
                   <button class="card-button" type="submit" value="0"><input type="text" value="回答1" name="answer1" disabled><input type="radio" name="correctAnswer" value="0" checked></button>
                   <button class="card-button" type="submit" value="1"><input type="text" value="回答2" name="answer2" disabled><input type="radio" name="correctAnswer" value="1" ></button>
                   <button class="card-button" type="submit" value="2"><input type="text" value="回答3" name="answer3" disabled><input type="radio" name="correctAnswer" value="2" ></button>
                   <button class="card-button" type="submit" value="3"><input type="text" value="回答4" name="answer4" disabled><input type="radio" name="correctAnswer" value="3" ></button>
-                </div>
-                <button id="addButton"type="submit" value="edit">追加</button>
-              </form>
+　　　　　　　　　</footer> 
+                -->
+
+                <section class="button-grid"><!-- このsectionタグを追加(3)-->
+                  <label><input type="radio" name="cities" value="0">
+                    <button class="card-button" type="submit" value="0"><input type="text" value="回答1" name="answer1" disabled><input type="radio" name="correctAnswer" value="0" checked></button></label>
+                  <label><input type="radio" name="cities" value="1">
+                    <button class="card-button" type="submit" value="1"><input type="text" value="回答2" name="answer2" disabled><input type="radio" name="correctAnswer" value="1" ></button></label>
+                  <label><input type="radio" name="cities" value="2">                  
+                    <button class="card-button" type="submit" value="2"><input type="text" value="回答3" name="answer3" disabled><input type="radio" name="correctAnswer" value="2" ></button></label>
+                  <label><input type="radio" name="cities" value="3">
+                    <button class="card-button" type="submit" value="3"><input type="text" value="回答4" name="answer4" disabled><input type="radio" name="correctAnswer" value="3" ></button></label>
+                  <footer>
+                    <button id="addButton" type="submit" value="edit">追加</button>
+                  </footer>
+                </section>
+              </form>    
+
             </dialog>   
             <dialog id="success" style="background-color: transparent;" 
               onclick="success.open && success.close()">

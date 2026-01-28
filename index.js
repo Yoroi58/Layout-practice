@@ -327,9 +327,9 @@ document.addEventListener('click', (e) => {
       const viewStyle = params[action].answerButtonView;
       addButton.setAttribute("style", `display: ${viewStyle};`);
       addButton.innerHTML = params[action].addButtonText ?? "追加";
-      document.querySelectorAll('[name="correctAnswer"]').forEach(btn => 
-        btn.setAttribute("style", `display: ${viewStyle};`)
-      );
+     // document.querySelectorAll('[name="correctAnswer"]').forEach(btn => 
+      //  btn.setAttribute("style", `display: ${viewStyle};`)
+      //);
       document.forms.$cities.prefecture.value = problem?.problemMap?? "" //
       controller.updateProblemMap(problem?.problemMap);
 
@@ -745,7 +745,8 @@ cities = {"44000": "大分県",
     // alert(value);
     // 1. 選択した都道府県に含まれる幾何データを取得
     document.forms.problem.problemMap.value = value;
-    const geometries = boundaries.features
+   
+   /* const geometries = boundaries.features
       .filter((feature) => feature.properties["N03_001"] == value)
       .map((feature) => feature.geometry);
 
@@ -771,7 +772,7 @@ cities = {"44000": "大分県",
       .join(" ");
     const pathNode = svg.root.querySelector("path");
     pathNode.setAttribute("d", profile);
-
+    */
     // 2. 選択した都道府県の自治体コードたちN03_007の配列を作る
     const features = boundaries.features.filter(
       (feature) => feature.properties["N03_001"] == value
